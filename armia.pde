@@ -1,0 +1,3 @@
+class Armia{
+  color kolor;
+}
