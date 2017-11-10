@@ -1,14 +1,19 @@
 class Wojak
 {
+  int id;
   Bron[] bronie;
+  int liczbaBroni;
   color kolor;
   Armia armia;
   PVector poz;
   float kierunek;
-  float predkosc;
+  float predkosc,predkoscMax;
   int typ;
   float zdrowie;
   float celnosc;
+  int coRobi; //0-martwy , 1-pilnuje, 2-goni, 3-strzela, 4-ucieka
+  Wojak cel;
+  
   
   Wojak(){
     poz=new PVector(0,0,0);
@@ -16,11 +21,22 @@ class Wojak
     typ=3;
     predkosc=1;
     kierunek=1;
+    cel=null;
+    coRobi=0;
+    
   }
   
   void rusz(float deltaT){
     poz=poz.add(PVector.fromAngle(kierunek).mult(predkosc*deltaT));
  //   println(poz.x+" "+poz.y);
+  }
+  
+  void wypisz(){
+    println("wojak "+id+"("+poz.x+","+poz.y+")");
+    if (armia!=null) println("  armia "+armia.id);
+    for (int i=0;i<liczbaBroni;i++){
+      bronie[i].wypisz();
+    }
   }
   
   void rysuj(){
@@ -53,5 +69,10 @@ class Wojak
       }
     }
     popMatrix();
+  }
+  
+  Wojak szukajWrogow(){
+    return null;
+    
   }
 }

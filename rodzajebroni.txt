@@ -1,0 +1,4 @@
+#nazwa,rodzaj,zasieg,czestotliwosc,sila, celnosc,ilosc amunicji,masa
+2
+miecz,1,1,2,2,0.9,10000,5
+luk,2,100,20,1,0.7,10000,3
