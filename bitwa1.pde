@@ -1,61 +1,76 @@
 int liczbaWojakow=1000;
 int liczbaArmii=2;
+int liczbaRodzajowBroni;
 
 Armia[] armie = new Armia[liczbaArmii];
-Bron[] bronie = new Bron[liczbaWojakow*2];
-Wojak[] wojacy = new Wojak[liczbaWojakow];
+//Bron[] bronie = new Bron[liczbaWojakow*2];
+Bron[] rodzajeBroni;
+//Wojak[] wojacy = new Wojak[liczbaWojakow];
 
 void setup(){
   size(500,500);
-  ustawWojakow();
+  wczytajRodzajeBroni("rodzajebroni.txt");
+  
+  ustawArmie();
+  wypiszArmie();
 }
 
 void draw(){
   background(127);
-  ruszWojakow();
-  rysujWojakow();
+  ruszArmie();
+  rysujArmie();
 }
 
 
 
-void ustawWojakow(){
-  
+void ustawArmie(){
   for (int i=0;i<liczbaArmii;i++){
-    armie[i]= new Armia();
-  }
-  
-  armie[0].kolor=color(255,0,0);
-  armie[1].kolor=color(0,0,255);
- 
-  for (int i=0;i<liczbaWojakow;i++){
-    wojacy[i]=new Wojak();
-  } //<>//
-  for (int i=0;i<10;i++){
-    for (int j=0;j<10;j++){
-      
-      wojacy[j*10+i].poz.x=i*10;
-      wojacy[j*10+i].poz.y=j*10;
-      wojacy[j*10+i].armia=armie[0];
-      wojacy[j*10+i].kolor=wojacy[j*10+i].armia.kolor;
-      
-      wojacy[j*10+i+100].poz.x=i*10+200;
-      wojacy[j*10+i+100].poz.y=j*10;
-      wojacy[j*10+i+100].armia=armie[1];
-      wojacy[j*10+i+100].kolor=wojacy[j*10+i+100].armia.kolor;
-    }
+      armie[i]= new Armia();
+      armie[i].id=i;
+   }
+   armie[0].kolor=color(255,0,0);
+   armie[1].kolor=color(0,0,255); //<>//
+   for (int i=0;i<liczbaArmii;i++){
+     armie[i].ustawWojakow();
+   };
+}
+
+void ruszArmie(){
+  for (int i=0;i<liczbaArmii;i++){
+    armie[i].ruszWojakow();
   }
 }
 
-void ruszWojakow(){
-  for (int i=0;i<liczbaWojakow;i++){
-    wojacy[i].rusz(0.1);
+void rysujArmie(){
+  for (int i=0;i<liczbaArmii;i++){
+    armie[i].rysujWojakow();
   }
 }
 
-void rysujWojakow(){
-  translate(200,200);
-  scale(2);
-  for (int i=0;i<liczbaWojakow;i++){ //<>//
-    wojacy[i].rysuj();
+void wypiszArmie(){
+  for (int i=0;i<liczbaArmii;i++){
+    armie[i].wypiszWojakow();
   }
-}
+} //<>//
+
+void wczytajRodzajeBroni(String nazwaPliku){
+  String[] ProdzajeBroni=loadStrings(nazwaPliku);
+  int nrlinii=1;
+  liczbaRodzajowBroni=int(ProdzajeBroni[nrlinii]);nrlinii++;
+  rodzajeBroni=new Bron[liczbaRodzajowBroni];
+  for(int i=0;i<liczbaRodzajowBroni;i++)
+  {
+    rodzajeBroni[i]=new Bron();
+   // println(ProdzajeBroni[nrlinii]);
+    String[] l2=ProdzajeBroni[nrlinii].split(",");nrlinii++;
+    rodzajeBroni[i].rodzaj=i;
+    rodzajeBroni[i].nazwa=l2[0];
+    rodzajeBroni[i].typ=int(l2[1]);
+    rodzajeBroni[i].zasieg=float(l2[2]);
+    rodzajeBroni[i].czestotliwosc=float(l2[3]);
+    rodzajeBroni[i].sila=float(l2[4]);
+    rodzajeBroni[i].celnosc=float(l2[5]);
+    rodzajeBroni[i].liczbaAmunicji=int(l2[6]);
+    rodzajeBroni[i].masa=int(l2[7]);
+  }
+};
