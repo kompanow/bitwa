@@ -5,5 +5,7 @@ class Bron{
   float sila;
   float celnosc;
   float czasDoWystrzalu;
+  int iloscAmunicji;
+  float ciezar;
   
 }

@@ -2,7 +2,7 @@ int liczbaWojakow=1000;
 int liczbaArmii=2;
 
 Armia[] armie = new Armia[liczbaArmii];
-Bron[] bronie = new Bron[liczbaWojakow*2];;
+Bron[] bronie = new Bron[liczbaWojakow*2];
 Wojak[] wojacy = new Wojak[liczbaWojakow];
 
 void setup(){
@@ -54,7 +54,7 @@ void ruszWojakow(){
 
 void rysujWojakow(){
   translate(200,200);
-  //scale(0.5);
+  scale(2);
   for (int i=0;i<liczbaWojakow;i++){ //<>//
     wojacy[i].rysuj();
   }
