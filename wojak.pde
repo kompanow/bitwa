@@ -71,8 +71,29 @@ class Wojak
     popMatrix();
   }
   
-  Wojak szukajWrogow(){
-    return null;
-    
+  Wojak szukajNajblizszegoWroga(){
+    float odleglosc=1000000;
+    Wojak temp;
+    temp=null;
+ //   PVector vtemp=new PVector();
+    for (Armia wrogieWojsko: armia.wojska){
+      if (armia!=wrogieWojsko){
+        for (int i=0;i<wrogieWojsko.liczbaWojakow;i++)
+        {
+          if (wrogieWojsko.wojacy[i].coRobi>0)
+          {
+            float d=(wrogieWojsko.wojacy[i].poz.x-poz.x)*(wrogieWojsko.wojacy[i].poz.x-poz.x)+
+                    (wrogieWojsko.wojacy[i].poz.y-poz.y)*(wrogieWojsko.wojacy[i].poz.y-poz.y);
+                    
+            if (d<odleglosc){
+              d=odleglosc;
+              temp=wrogieWojsko.wojacy[i];
+            }
+          }
+        }
+        
+      }
+    }
+    return temp;
   }
 }

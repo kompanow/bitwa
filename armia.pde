@@ -1,13 +1,12 @@
 class Armia{
   color kolor;
+  Armia[] wojska;
   int id;
   int liczbaWojakow=100;
   Wojak[] wojacy= new Wojak[liczbaWojakow];
   
   void ustawWojakow(){
-    
-
-   
+       
     for (int i=0;i<liczbaWojakow;i++){
       wojacy[i]=new Wojak();
       wojacy[i].id=i;
@@ -40,8 +39,6 @@ class Armia{
   }
   
   void rysujWojakow(){
-    translate(200,200);
-    scale(1);
     for (int i=0;i<liczbaWojakow;i++){
       wojacy[i].rysuj();
     }

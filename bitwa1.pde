@@ -24,14 +24,16 @@ void draw(){
 
 
 void ustawArmie(){
+
   for (int i=0;i<liczbaArmii;i++){
       armie[i]= new Armia();
       armie[i].id=i;
    }
-   armie[0].kolor=color(255,0,0);
-   armie[1].kolor=color(0,0,255); //<>//
+   armie[0].kolor=color(255,0,0); //<>//
+   armie[1].kolor=color(0,0,255);
    for (int i=0;i<liczbaArmii;i++){
      armie[i].ustawWojakow();
+     armie[i].wojska=armie;
    };
 }
 
@@ -42,6 +44,8 @@ void ruszArmie(){
 }
 
 void rysujArmie(){
+  translate(200,200);
+  scale(1);  
   for (int i=0;i<liczbaArmii;i++){
     armie[i].rysujWojakow();
   }
