@@ -12,7 +12,10 @@ class Wojak
   float zdrowie;
   float celnosc;
   int coRobi; //0-martwy , 1-pilnuje, 2-goni, 3-strzela, 4-ucieka
+  float zasiegWzroku;
+  float zasiegBroni;
   Wojak cel;
+  Strzal strzal;
   
   
   Wojak(){
@@ -20,15 +23,44 @@ class Wojak
     kolor=color(255,255,255);
     typ=3;
     predkosc=1;
-    kierunek=1;
+    kierunek=0;
     cel=null;
-    coRobi=0;
+    coRobi=1;
+    zasiegWzroku=1000;
     
   }
   
+  void decyduj(){
+    Wojak najblizszy=szukajNajblizszegoWroga();
+    if (najblizszy!=null){
+      cel=najblizszy;
+     // println("#");
+      float odleglosc=(najblizszy.poz.x-poz.x)*(najblizszy.poz.x-poz.x)+
+                      (najblizszy.poz.y-poz.y)*(najblizszy.poz.y-poz.y);
+                      
+      if (odleglosc>zasiegBroni*zasiegBroni){
+        coRobi=2; //goni
+        predkosc=1;
+      }else{
+        coRobi=3; //strzela
+        predkosc=0;
+      }
+        kierunek=atan2(najblizszy.poz.y-poz.y,najblizszy.poz.x-poz.x)*random(0.99,1.01);
+    }      
+  }
+    
+    
+    
+ 
+  
   void rusz(float deltaT){
-    poz=poz.add(PVector.fromAngle(kierunek).mult(predkosc*deltaT));
- //   println(poz.x+" "+poz.y);
+    if (coRobi>1){
+      
+      poz=poz.add(PVector.fromAngle(kierunek).mult(predkosc*deltaT));
+      
+    }
+    
+ 
   }
   
   void wypisz(){
@@ -72,28 +104,38 @@ class Wojak
   }
   
   Wojak szukajNajblizszegoWroga(){
-    float odleglosc=1000000;
+    float odleglosc=zasiegWzroku*zasiegWzroku;
     Wojak temp;
     temp=null;
  //   PVector vtemp=new PVector();
+ //   println('@');
     for (Armia wrogieWojsko: armia.wojska){
       if (armia!=wrogieWojsko){
-        for (int i=0;i<wrogieWojsko.liczbaWojakow;i++)
+        //for (int i=0;i<wrogieWojsko.liczbaWojakow;i++)
+        for (Wojak woj: wrogieWojsko.wojacy)
         {
-          if (wrogieWojsko.wojacy[i].coRobi>0)
+ //         print('#');
+          //if (wrogieWojsko.wojacy[i].coRobi>0)
+          if (woj.coRobi>0)
           {
-            float d=(wrogieWojsko.wojacy[i].poz.x-poz.x)*(wrogieWojsko.wojacy[i].poz.x-poz.x)+
-                    (wrogieWojsko.wojacy[i].poz.y-poz.y)*(wrogieWojsko.wojacy[i].poz.y-poz.y);
-                    
+            float d=(woj.poz.x-poz.x)*(woj.poz.x-poz.x)+
+                    (woj.poz.y-poz.y)*(woj.poz.y-poz.y);
+           // println(d);        
             if (d<odleglosc){
-              d=odleglosc;
-              temp=wrogieWojsko.wojacy[i];
+              odleglosc=d;
+              temp=woj;
             }
           }
         }
+  //      println();
         
       }
     }
     return temp;
+  }
+  void pokazWroga(){
+  //  stroke(255);
+    if (null!=cel) line(cel.poz.x,cel.poz.y,poz.x,poz.y);
+    
   }
 }

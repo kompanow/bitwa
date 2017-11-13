@@ -1,6 +1,7 @@
-int liczbaWojakow=1000;
-int liczbaArmii=2;
+//int liczbaWojakow=1000;
+int liczbaArmii=3;
 int liczbaRodzajowBroni;
+PFont czciona;
 
 Armia[] armie = new Armia[liczbaArmii];
 //Bron[] bronie = new Bron[liczbaWojakow*2];
@@ -10,6 +11,8 @@ Bron[] rodzajeBroni;
 void setup(){
   size(500,500);
   wczytajRodzajeBroni("rodzajebroni.txt");
+  czciona=createFont("Arial",8,true);
+  textFont(czciona,16);
   
   ustawArmie();
   wypiszArmie();
@@ -17,8 +20,10 @@ void setup(){
 
 void draw(){
   background(127);
+  decydujArmie();
   ruszArmie();
   rysujArmie();
+ // listaArmii();
 }
 
 
@@ -29,12 +34,19 @@ void ustawArmie(){
       armie[i]= new Armia();
       armie[i].id=i;
    }
-   armie[0].kolor=color(255,0,0); //<>//
+   armie[0].kolor=color(255,0,0);
    armie[1].kolor=color(0,0,255);
+   armie[2].kolor=color(0,255,0);
    for (int i=0;i<liczbaArmii;i++){
      armie[i].ustawWojakow();
      armie[i].wojska=armie;
    };
+}
+
+void decydujArmie(){
+  for (Armia armia:armie){
+    armia.decydujWojakow();
+  }
 }
 
 void ruszArmie(){
@@ -44,10 +56,17 @@ void ruszArmie(){
 }
 
 void rysujArmie(){
-  translate(200,200);
+  translate(50,50);
   scale(1);  
   for (int i=0;i<liczbaArmii;i++){
     armie[i].rysujWojakow();
+  }
+}
+
+
+void listaArmii(){
+  for (Armia armia:armie){
+    armia.listaWojakow(armia.id*10,0);
   }
 }
 
